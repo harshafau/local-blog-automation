@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Blog Automation Suite</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-bolt"></i> EV Blog Automation Suite</h1>
+            <p>Generate and publish professional electric vehicle blog posts with AI-powered content</p>
+        </header>
+
+        <main>
+            <div class="form-container">
+                <form id="blogForm">
+                    <div class="form-section">
+                        <h3><i class="fas fa-table"></i> Data Source</h3>
+                        <div class="form-group">
+                            <label for="spreadsheet_id">Google Sheet ID:</label>
+                            <input type="text" id="spreadsheet_id" name="spreadsheet_id" placeholder="Enter your Google Sheet ID" required>
+                            <small>The ID from your Google Sheets URL (e.g., 1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms)</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-wordpress"></i> WordPress Configuration</h3>
+                        <div class="form-group">
+                            <label for="wordpress_url">WordPress URL:</label>
+                            <input type="url" id="wordpress_url" name="wordpress_url" placeholder="https://example.com" required>
+                            <small>Your WordPress site URL (e.g., https://example.com)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="wordpress_username">WordPress Username:</label>
+                            <input type="text" id="wordpress_username" name="wordpress_username" placeholder="admin" required>
+                            <small>Your WordPress admin username</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="wordpress_password">WordPress Password:</label>
+                            <div class="password-input-container">
+                                <input type="password" id="wordpress_password" name="wordpress_password" placeholder="••••••••" required>
+                                <button type="button" id="togglePassword" class="toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small>Your WordPress admin password or application password</small>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-sliders-h"></i> Content Settings</h3>
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label for="num_images">Number of Images:</label>
+                                <input type="number" id="num_images" name="num_images" value="3" min="1" max="10">
+                                <small>Maximum images per post</small>
+                            </div>
+
+                            <div class="form-group half">
+                                <label for="article_length">Article Length:</label>
+                                <input type="number" id="article_length" name="article_length" value="1000" min="500" max="5000" step="100">
+                                <small>Target word count</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="generateBtn">
+                            <span>Generate Articles</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="output-container">
+                <h2>Process Output</h2>
+                <div class="status-bar">
+                    <div class="status-indicator" id="statusIndicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Ready</span>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="clearLogsBtn" class="icon-button" title="Clear logs">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="terminal" id="terminal">
+                    <div id="logs">Welcome to EV Blog Automation Suite!
+Type your configuration details and click "Generate Articles" to begin.
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 EV Blog Automation Suite | <a href="#" id="aboutLink">About</a> | <a href="#" id="helpLink">Help</a></p>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>How to Use EV Blog Automation Suite</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>Getting Started</h4>
+                <p>This tool automatically generates and publishes blog posts about electric vehicles to your WordPress site using data from a Google Sheet.</p>
+
+                <h4>Required Fields</h4>
+                <ul>
+                    <li><strong>Google Sheet ID:</strong> The ID from your Google Sheets URL. The sheet must be publicly accessible.</li>
+                    <li><strong>WordPress URL:</strong> Your WordPress site URL (e.g., https://example.com).</li>
+                    <li><strong>WordPress Username:</strong> Your WordPress admin username.</li>
+                    <li><strong>WordPress Password:</strong> Your WordPress admin password or application password.</li>
+                </ul>
+
+                <h4>Optional Settings</h4>
+                <ul>
+                    <li><strong>Number of Images:</strong> Maximum number of images to include per post (default: 3).</li>
+                    <li><strong>Article Length:</strong> Target word count for generated articles (default: 1000).</li>
+                </ul>
+
+                <h4>Google Sheet Format</h4>
+                <p>Your Google Sheet should have the following columns:</p>
+                <ul>
+                    <li><strong>topic name:</strong> The main topic of the blog post</li>
+                    <li><strong>title:</strong> The title of the blog post</li>
+                    <li><strong>keywords:</strong> Keywords to include in the content</li>
+                    <li><strong>context:</strong> Additional context for the AI</li>
+                    <li><strong>must have elements:</strong> Required elements (e.g., table, bullet points)</li>
+                    <li><strong>status:</strong> Current status of the post</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
